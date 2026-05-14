@@ -4,426 +4,912 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Elpaso Cleaning Solutions | Beyond Clean, A Bubbly Experience</title>
-  <!-- Tailwind CSS v3 + Font Awesome Icons -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Custom config to extend Tailwind with extra glass/colors -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            'poppins': ['Poppins', 'system-ui', 'sans-serif'],
-          },
-          animation: {
-            'float-slow': 'float 6s ease-in-out infinite',
-            'float-medium': 'float 4s ease-in-out infinite',
-            'pop-bubble': 'popBubble 0.6s cubic-bezier(0.34, 1.2, 0.64, 1) forwards',
-            'slide-up-fade': 'slideUpFade 0.8s ease-out forwards',
-            'shimmer-border': 'shimmer 3s infinite linear',
-          }
-        }
-      }
-    }
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
   <style>
-    /* custom keyframes, glassmorphism extras, bubble animations */
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
-    
-    * {
-      font-family: 'Poppins', sans-serif;
+    :root {
+      --mint: #e8f8f0;
+      --foam: #f0faff;
+      --bubble-blue: #d6f0ff;
+      --glass-green: rgba(200, 240, 220, 0.45);
+      --glass-blue: rgba(210, 235, 255, 0.45);
+      --deep-teal: #1a7f64;
+      --sky: #3b9dd4;
+      --soft-green: #5dbf8a;
+      --text-dark: #1c2e26;
     }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
+      font-family: 'DM Sans', sans-serif;
+      background: linear-gradient(160deg, #ffffff 0%, #f2fbf6 35%, #eaf6ff 65%, #f5fffd 100%);
+      min-height: 100vh;
       overflow-x: hidden;
+      color: var(--text-dark);
     }
 
-    /* animated gradient background - clean & fresh */
-    .gradient-bg {
-      background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 40%, #e6f7ec 100%);
-      position: relative;
+    /* ── BUBBLE CANVAS ── */
+    #bubble-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
     }
 
-    /* BUBBLE base style + popping animation */
-    .bubble {
-      position: absolute;
-      background: radial-gradient(circle at 30% 28%, rgba(255,255,245,0.95), rgba(180, 230, 210, 0.35));
-      border-radius: 50%;
-      backdrop-filter: blur(3px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05), inset -2px -2px 5px rgba(0,0,0,0.02), inset 2px 2px 10px rgba(255,255,255,0.8);
-      cursor: pointer;
-      transition: transform 0.2s ease;
-      animation: floatBubble 8s infinite alternate ease-in-out;
-      z-index: 1;
-      pointer-events: auto;
+    /* ── GLASSMORPHISM ── */
+    .glass {
+      background: rgba(255,255,255,0.52);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.72);
+      box-shadow: 0 8px 40px rgba(90,170,140,0.10), 0 1px 0 rgba(255,255,255,0.8) inset;
     }
-    
-    .bubble:hover {
-      transform: scale(1.08);
-      background: radial-gradient(circle at 30% 28%, rgba(210, 245, 220, 0.9), rgba(150, 210, 180, 0.5));
+    .glass-tinted {
+      background: linear-gradient(135deg, rgba(232,248,240,0.60) 0%, rgba(214,240,255,0.60) 100%);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.65);
+      box-shadow: 0 12px 48px rgba(60,160,120,0.10);
     }
 
-    @keyframes floatBubble {
-      0% { transform: translateY(0px) translateX(0px) rotate(0deg); }
-      100% { transform: translateY(-35px) translateX(18px) rotate(5deg); }
-    }
-
-    /* bubble pop animation */
-    .pop-effect {
-      animation: popOff 0.4s forwards cubic-bezier(0.5, 1.5, 0.5, 1);
-    }
-
-    @keyframes popOff {
-      0% { transform: scale(1); opacity: 0.9; }
-      100% { transform: scale(2.2); opacity: 0; visibility: hidden; pointer-events: none; }
-    }
-
-    /* hero bubble title pop animation */
-    .hero-bubble-pop {
-      animation: bubblePopUp 0.9s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
-      transform-origin: center;
-    }
-
-    @keyframes bubblePopUp {
-      0% { opacity: 0; transform: scale(0.2) translateY(60px); filter: blur(8px);}
-      50% { opacity: 0.9; transform: scale(1.1) translateY(-5px);}
-      100% { opacity: 1; transform: scale(1) translateY(0px); filter: blur(0);}
-    }
-
-    /* glass card */
-    .glass-card {
-      background: rgba(255, 255, 255, 0.45);
-      backdrop-filter: blur(12px);
-      border-radius: 48px;
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.05);
-      transition: all 0.3s ease;
-    }
-    .glass-card:hover {
-      background: rgba(255, 255, 255, 0.65);
-      box-shadow: 0 20px 35px rgba(100, 140, 120, 0.15);
-      border: 1px solid rgba(140, 210, 170, 0.5);
-    }
-
-    /* custom separators: liquid wave + bubble line */
-    .wave-separator {
-      background: repeating-linear-gradient(90deg, transparent, transparent 25px, rgba(110, 190, 140, 0.4) 25px, rgba(80, 170, 130, 0.3) 40px);
-      height: 6px;
-      width: 80%;
-      margin: 2rem auto;
-      border-radius: 20px;
-      position: relative;
-      animation: waveShift 5s linear infinite;
-    }
-    @keyframes waveShift {
-      0% { background-position: 0px 0px; }
-      100% { background-position: 60px 0px; }
-    }
-
-    .bubble-divider {
+    /* ── NAV ── */
+    .nav-bar {
+      position: sticky;
+      top: 16px;
+      z-index: 100;
+      margin: 16px 20px 0;
+      border-radius: 999px;
+      padding: 12px 28px;
       display: flex;
-      justify-content: center;
-      gap: 16px;
+      justify-content: space-between;
       align-items: center;
     }
-    .bubble-divider .mini-bubble {
-      width: 12px;
-      height: 12px;
-      background: radial-gradient(circle, #a0e0c0, #4f9f6f);
-      border-radius: 50%;
-      animation: pulseGlow 1.8s infinite alternate;
+    .logo-type {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 1.25rem;
+      background: linear-gradient(90deg, #1a7f64, #3b9dd4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
-    @keyframes pulseGlow {
-      0% { opacity: 0.5; transform: scale(0.8); box-shadow: 0 0 0px #a0e0c0;}
-      100% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 12px #8fd6b0;}
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #2a6a50;
+      text-decoration: none;
+      transition: color .2s;
+      margin-left: 24px;
+    }
+    .nav-links a:hover { color: #3b9dd4; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 20px 60px;
+      position: relative;
+      z-index: 10;
     }
 
-    /* service icons & hover */
-    .service-icon {
-      transition: transform 0.3s, filter 0.3s;
+    /* bubble-pop entrance */
+    .hero-card {
+      border-radius: 56px;
+      padding: 56px 48px;
+      max-width: 780px;
+      width: 100%;
+      animation: bubbleRise 1.1s cubic-bezier(0.18, 0.9, 0.3, 1.15) forwards;
+      opacity: 0;
+      transform: scale(0.15) translateY(80px);
     }
-    .group:hover .service-icon {
-      transform: scale(1.1) rotate(2deg);
-      filter: drop-shadow(0 8px 12px rgba(70, 130, 100, 0.3));
+    @keyframes bubbleRise {
+      0%   { opacity: 0; transform: scale(0.15) translateY(80px); filter: blur(12px); }
+      60%  { opacity: 1; transform: scale(1.05) translateY(-8px); filter: blur(0); }
+      80%  { transform: scale(0.98) translateY(3px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+    }
+
+    h1.hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 7vw, 5rem);
+      font-weight: 900;
+      line-height: 1.08;
+      color: var(--text-dark);
+    }
+    .hero-title .brand {
+      background: linear-gradient(90deg, #1a7f64 0%, #3b9dd4 50%, #5dbf8a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      background-size: 200%;
+      animation: shiftGrad 5s ease infinite alternate;
+    }
+    @keyframes shiftGrad {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    .hero-sub {
+      margin-top: 16px;
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      font-weight: 300;
+      color: #476e5e;
+      max-width: 520px;
+      margin-inline: auto;
+      line-height: 1.65;
+    }
+    .hero-sub strong { font-weight: 600; color: #1a7f64; }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #1a7f64, #3b9dd4);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(26,127,100,0.30);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn-primary:hover { transform: scale(1.05); box-shadow: 0 12px 32px rgba(26,127,100,0.42); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.7);
+      color: #1a7f64;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: 1.5px solid rgba(93,191,138,0.45);
+      text-decoration: none;
+      transition: background .2s, transform .2s;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.9); transform: scale(1.04); }
+
+    /* ── SEPARATOR: SOAP FILM WAVE ── */
+    .soap-separator {
+      position: relative;
+      width: 100%;
+      height: 80px;
+      overflow: hidden;
+      z-index: 10;
+    }
+    .soap-separator svg { width: 100%; height: 100%; }
+
+    /* ── FOAM DOTS SEPARATOR ── */
+    .foam-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+      z-index: 10;
+      position: relative;
+      margin: 8px 0;
+    }
+    .foam-dot {
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff, rgba(93,191,138,0.5));
+      box-shadow: 0 2px 6px rgba(60,160,100,0.15), inset 1px 1px 3px rgba(255,255,255,0.9);
+      animation: foamPulse 2.4s ease-in-out infinite alternate;
+    }
+    @keyframes foamPulse {
+      0%  { transform: scale(0.85); opacity: 0.6; }
+      100%{ transform: scale(1.15); opacity: 1.0; }
+    }
+
+    /* ── SECTIONS ── */
+    section { position: relative; z-index: 10; }
+
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #3b9dd4;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: var(--text-dark);
+      margin-top: 6px;
+      line-height: 1.2;
+    }
+
+    /* ── ABOUT ── */
+    .about-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .about-visual { order: -1; }
+    }
+    .about-text p { color: #3a5a4a; line-height: 1.8; margin-top: 12px; font-size: 0.97rem; }
+
+    .fact-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .fact-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(93,191,138,0.35);
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #2a6a50;
+    }
+
+    /* bubble visual ring */
+    .bubble-ring {
+      position: relative;
+      width: 280px;
+      height: 280px;
+      margin: auto;
+    }
+    .bubble-ring .core {
+      position: absolute;
+      inset: 20px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.95), rgba(214,240,255,0.6) 60%, rgba(93,191,138,0.3));
+      box-shadow: 0 20px 60px rgba(26,127,100,0.15), inset -4px -4px 12px rgba(0,0,0,0.04), inset 4px 4px 16px rgba(255,255,255,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4.5rem;
+      animation: coreSpin 14s linear infinite;
+    }
+    @keyframes coreSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .bubble-ring .orbit-dot {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), rgba(93,191,138,0.5));
+      box-shadow: 0 4px 12px rgba(60,160,100,0.20), inset 1px 1px 4px rgba(255,255,255,0.8);
+      animation: orbit linear infinite;
+    }
+    @keyframes orbit {
+      from { transform: rotate(var(--start)) translateX(120px) rotate(calc(-1 * var(--start))); }
+      to   { transform: rotate(calc(var(--start) + 360deg)) translateX(120px) rotate(calc(-1 * (var(--start) + 360deg))); }
+    }
+
+    /* ── SERVICES ── */
+    .services-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px 48px;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 32px;
+    }
+    @media (max-width: 900px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .services-grid { grid-template-columns: 1fr; } }
+
+    .service-card {
+      border-radius: 32px;
+      padding: 28px 24px;
+      transition: transform .3s, box-shadow .3s;
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -30%;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.7), rgba(93,191,138,0.15));
+      pointer-events: none;
+    }
+    .service-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(26,127,100,0.16); }
+
+    .service-icon-wrap {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 28%, rgba(255,255,255,0.95), rgba(214,240,255,0.5));
+      box-shadow: 0 6px 18px rgba(60,160,120,0.15), inset 2px 2px 6px rgba(255,255,255,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.7rem;
+      margin-bottom: 14px;
+      transition: transform .3s;
+    }
+    .service-card:hover .service-icon-wrap { transform: scale(1.12) rotate(4deg); }
+
+    .service-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+    .service-card p { font-size: 0.87rem; color: #4a6a58; line-height: 1.7; }
+
+    /* ── EXTRAS ── */
+    .extras-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px 48px;
+    }
+    .extras-card {
+      border-radius: 40px;
+      padding: 40px;
+    }
+    .extras-list { list-style: none; margin-top: 18px; display: flex; flex-direction: column; gap: 12px; }
+    .extras-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.93rem;
+      color: #3a5a4a;
+    }
+    .extras-list li .icon-pill {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), rgba(93,191,138,0.4));
+      box-shadow: 0 4px 10px rgba(60,140,100,0.12), inset 1px 1px 3px rgba(255,255,255,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    /* ── FOUNDER ── */
+    .founder-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px 48px;
+    }
+    .founder-card {
+      border-radius: 40px;
+      padding: 36px;
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+    @media (max-width: 600px) { .founder-card { flex-direction: column; text-align: center; } }
+
+    .founder-avatar {
+      flex-shrink: 0;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 28%, rgba(255,255,255,0.95), rgba(93,191,138,0.4));
+      box-shadow: 0 8px 24px rgba(26,127,100,0.18), inset 2px 2px 8px rgba(255,255,255,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+    .founder-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+    .founder-card .role { color: #3b9dd4; font-weight: 600; font-size: 0.85rem; margin-top: 2px; }
+    .founder-card p { color: #4a6a58; font-size: 0.92rem; line-height: 1.75; margin-top: 10px; }
+    .contact-pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .contact-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.65);
+      border: 1px solid rgba(93,191,138,0.3);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 0.8rem;
+      color: #2a6a50;
+      font-weight: 500;
+    }
+
+    /* ── CTA ── */
+    .cta-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
+    }
+    .cta-card {
+      border-radius: 56px;
+      padding: 60px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-card::before {
+      content: '';
+      position: absolute;
+      top: -60px; left: -60px;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(93,191,138,0.12), transparent 70%);
+      pointer-events: none;
+    }
+    .cta-card::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; right: -40px;
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(59,157,212,0.12), transparent 70%);
+      pointer-events: none;
+    }
+    .cta-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 900;
+      color: var(--text-dark);
+      line-height: 1.2;
+    }
+    .cta-card h2 span {
+      background: linear-gradient(90deg, #1a7f64, #3b9dd4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .cta-info-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 28px;
+    }
+    .cta-info-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.65);
+      border: 1px solid rgba(93,191,138,0.3);
+      border-radius: 999px;
+      padding: 9px 18px;
+      font-size: 0.85rem;
+      color: #2a6a50;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 28px 20px;
+      border-top: 1px solid rgba(93,191,138,0.2);
+      font-size: 0.83rem;
+      color: #5a7a68;
+    }
+    footer .emojis { margin-top: 8px; font-size: 1.2rem; letter-spacing: 6px; opacity: 0.6; }
+
+    /* ── ANIMATED BUBBLES ── */
+    .floating-bubble {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: auto;
+      cursor: pointer;
+      z-index: 2;
+      background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.92), rgba(200,235,220,0.30) 60%, rgba(170,215,255,0.20));
+      box-shadow:
+        0 8px 24px rgba(0,0,0,0.05),
+        inset -3px -3px 8px rgba(0,0,0,0.03),
+        inset 3px 3px 12px rgba(255,255,255,0.85),
+        0 0 0 1px rgba(255,255,255,0.5);
+      transition: transform .15s ease;
+    }
+    .floating-bubble:hover { transform: scale(1.1) !important; }
+    .floating-bubble.popping {
+      animation: bubblePop .35s cubic-bezier(.4,1.8,.6,1) forwards !important;
+      pointer-events: none;
+    }
+    @keyframes bubblePop {
+      0%  { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.5); opacity: 0.6; }
+      100%{ transform: scale(2.4); opacity: 0; }
+    }
+
+    /* ── SCROLL HINT ── */
+    .scroll-hint {
+      margin-top: 28px;
+      font-size: 0.78rem;
+      color: rgba(26,127,100,0.55);
+      letter-spacing: 0.12em;
+      animation: bobble 2.2s ease-in-out infinite;
+      font-weight: 500;
+    }
+    @keyframes bobble {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* ── MOBILE TWEAKS ── */
+    @media (max-width: 480px) {
+      .hero-card { padding: 36px 24px; border-radius: 36px; }
+      .nav-bar { margin: 10px 12px 0; padding: 10px 18px; }
+      .nav-links { display: none; }
+      .extras-card { padding: 28px 20px; }
+      .cta-card { padding: 40px 24px; border-radius: 36px; }
+      .bubble-ring { width: 200px; height: 200px; }
+      .bubble-ring .core { font-size: 3rem; }
+    }
+
+    /* pop sparkle */
+    .sparkle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 999;
+      border-radius: 50%;
+      animation: sparkleOut .5s ease-out forwards;
+    }
+    @keyframes sparkleOut {
+      0%   { transform: translate(-50%,-50%) scale(0.4); opacity: 1; }
+      100% { transform: translate(-50%,-50%) scale(2.5); opacity: 0; }
     }
   </style>
 </head>
-<body class="gradient-bg font-poppins relative overflow-x-hidden">
+<body>
 
-  <!-- animated bubbles canvas (dynamic DOM bubbles that pop onclick) -->
-  <div id="bubble-container" class="fixed inset-0 pointer-events-none overflow-hidden z-0"></div>
-  
-  <!-- NAVBAR (glassmorphism) -->
-  <nav class="relative z-20 glass-card mx-4 md:mx-8 mt-4 px-6 py-3 flex flex-wrap justify-between items-center shadow-md">
-    <div class="flex items-center gap-3">
-      <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-200 to-green-200 flex items-center justify-center shadow-inner">
-        <span class="text-2xl drop-shadow-sm">🧼</span>
-      </div>
-      <span class="font-bold text-xl tracking-tight bg-gradient-to-r from-emerald-800 to-sky-700 bg-clip-text text-transparent">Elpaso Cleaning</span>
+  <!-- BUBBLE LAYER -->
+  <div id="bubble-layer" style="position:fixed;inset:0;z-index:2;pointer-events:none;overflow:hidden;"></div>
+
+  <!-- NAV -->
+  <nav class="nav-bar glass" style="z-index:100;">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="width:38px;height:38px;border-radius:50%;background:radial-gradient(circle at 32% 28%, #fff, rgba(93,191,138,0.5));box-shadow:0 4px 12px rgba(26,127,100,0.18),inset 2px 2px 6px rgba(255,255,255,0.8);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">🧼</div>
+      <span class="logo-type">Elpaso Cleaning</span>
     </div>
-    <div class="flex gap-5 text-sm md:text-base font-medium text-emerald-800">
-      <a href="#" class="hover:text-emerald-500 transition">Home</a>
-      <a href="#" class="hover:text-emerald-500 transition">Services</a>
-      <a href="#" class="hover:text-emerald-500 transition">Contact</a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
     </div>
   </nav>
 
-  <!-- MAIN HERO SECTION: title pops like a bubble, center aligned -->
-  <section class="relative z-10 min-h-[90vh] flex flex-col items-center justify-center px-6 text-center">
-    <div class="max-w-4xl mx-auto hero-bubble-pop">
-      <div class="glass-card p-8 md:p-12 inline-block backdrop-blur-md bg-white/40 shadow-2xl rounded-[64px] border border-white/50">
-        <h1 class="text-5xl md:text-7xl font-extrabold leading-tight tracking-tight">
-          <span class="bg-gradient-to-r from-sky-600 via-emerald-500 to-teal-500 bg-clip-text text-transparent">Elpaso</span><br>
-          <span class="text-gray-800">Cleaning Solutions</span>
-        </h1>
-        <div class="my-4 h-2 w-32 mx-auto rounded-full bg-gradient-to-r from-sky-300 to-emerald-300"></div>
-        <p class="text-lg md:text-2xl text-gray-700 max-w-2xl mx-auto font-medium mt-4">Where innovation meets tradition — <span class="text-emerald-700 font-semibold">cleanliness becomes an experience.</span></p>
-        <div class="mt-8 flex flex-wrap gap-4 justify-center">
-          <a href="#" class="px-8 py-3 bg-gradient-to-r from-sky-500 to-emerald-500 rounded-full text-white font-semibold shadow-lg hover:shadow-xl transition transform hover:scale-105">✨ Get a Quote</a>
-          <a href="#" class="px-8 py-3 bg-white/70 backdrop-blur rounded-full text-emerald-700 font-semibold border border-emerald-300 hover:bg-white transition">Discover Services</a>
-        </div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-card glass-tinted">
+      <div style="font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:#3b9dd4;font-weight:600;margin-bottom:16px;">✦ Rustenburg, South Africa</div>
+      <h1 class="hero-title">
+        <span class="brand">Elpaso</span><br>
+        Cleaning Solutions
+      </h1>
+      <p class="hero-sub">Where innovation meets tradition — <strong>cleanliness becomes an experience.</strong></p>
+      <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:32px;">
+        <a href="#contact" class="btn-primary">🫧 Get a Quote</a>
+        <a href="#services" class="btn-ghost">Discover Services</a>
       </div>
     </div>
-    <div class="absolute bottom-10 left-0 right-0 text-center text-sm text-emerald-600/60 font-mono animate-bounce">scroll to explore 🫧</div>
+    <div class="scroll-hint">🫧 &nbsp;scroll to explore &nbsp;🫧</div>
   </section>
 
-  <!-- unique animated separator : bubble divider + wave -->
-  <div class="relative z-10 my-4">
-    <div class="bubble-divider">
-      <div class="mini-bubble"></div>
-      <div class="w-24 h-[2px] bg-gradient-to-r from-transparent via-emerald-400 to-transparent"></div>
-      <div class="mini-bubble" style="animation-delay: 0.4s;"></div>
-      <div class="w-24 h-[2px] bg-gradient-to-r from-transparent via-sky-400 to-transparent"></div>
-      <div class="mini-bubble" style="animation-delay: 0.7s;"></div>
-    </div>
-    <div class="wave-separator"></div>
+  <!-- SOAP FILM SEPARATOR -->
+  <div class="soap-separator" style="position:relative;z-index:10;">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="wg1" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"  stop-color="#5dbf8a" stop-opacity="0.22"/>
+          <stop offset="30%" stop-color="#3b9dd4" stop-opacity="0.35"/>
+          <stop offset="60%" stop-color="#5dbf8a" stop-opacity="0.28"/>
+          <stop offset="100%" stop-color="#3b9dd4" stop-opacity="0.20"/>
+        </linearGradient>
+        <linearGradient id="wg2" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"  stop-color="#3b9dd4" stop-opacity="0.18"/>
+          <stop offset="50%" stop-color="#5dbf8a" stop-opacity="0.30"/>
+          <stop offset="100%" stop-color="#3b9dd4" stop-opacity="0.18"/>
+        </linearGradient>
+      </defs>
+      <path id="wave1" d="M0,40 C240,10 480,70 720,40 C960,10 1200,70 1440,40 L1440,80 L0,80 Z" fill="url(#wg1)">
+        <animate attributeName="d"
+          values="M0,40 C240,10 480,70 720,40 C960,10 1200,70 1440,40 L1440,80 L0,80 Z;
+                  M0,40 C240,70 480,10 720,40 C960,70 1200,10 1440,40 L1440,80 L0,80 Z;
+                  M0,40 C240,10 480,70 720,40 C960,10 1200,70 1440,40 L1440,80 L0,80 Z"
+          dur="5s" repeatCount="indefinite"/>
+      </path>
+      <path d="M0,55 C360,25 720,75 1080,45 C1260,30 1380,55 1440,50 L1440,80 L0,80 Z" fill="url(#wg2)" opacity="0.6">
+        <animate attributeName="d"
+          values="M0,55 C360,25 720,75 1080,45 C1260,30 1380,55 1440,50 L1440,80 L0,80 Z;
+                  M0,55 C360,75 720,25 1080,55 C1260,70 1380,35 1440,50 L1440,80 L0,80 Z;
+                  M0,55 C360,25 720,75 1080,45 C1260,30 1380,55 1440,50 L1440,80 L0,80 Z"
+          dur="7s" repeatCount="indefinite"/>
+      </path>
+    </svg>
   </div>
 
-  <!-- ABOUT + MISSION (glassmorphism, use company profile text) -->
-  <section class="relative z-10 max-w-7xl mx-auto px-6 py-12">
-    <div class="glass-card p-8 md:p-10 rounded-3xl">
-      <div class="grid md:grid-cols-2 gap-10 items-center">
-        <div>
-          <span class="text-emerald-600 font-semibold tracking-wide text-sm">✦ OUR STORY</span>
-          <h2 class="text-3xl md:text-4xl font-bold mt-2 text-gray-800">Revolutionizing Cleanliness</h2>
-          <p class="mt-4 text-gray-700 leading-relaxed">In October 2023, founder <strong class="text-emerald-700">Ishmael Keogatile</strong> laid the cornerstone of El Paso Cleaning Solutions, driven to break barriers that confined innovative services to affluent areas. Born from 3 years of grassroots success as <strong>Ishy's Car Wash & Sneaker Laundry</strong>, we now bring unmatched quality & convenience to every doorstep.</p>
-          <p class="mt-3 text-gray-700">Our mission: deliver exceptional & holistic cleaning — blending fixed & mobile solutions to create safer, vibrant environments for individuals, households & businesses.</p>
-          <div class="mt-6 flex gap-4 flex-wrap">
-            <div class="flex items-center gap-2"><span class="text-2xl">🧴</span><span>Eco-friendly</span></div>
-            <div class="flex items-center gap-2"><span class="text-2xl">🫧</span><span>Innovation first</span></div>
-            <div class="flex items-center gap-2"><span class="text-2xl">🏘️</span><span>Community impact</span></div>
+  <!-- FOAM DOT SEPARATOR -->
+  <div class="foam-row" style="z-index:10;position:relative;padding:6px 20px;">
+    <script>
+      // inline dots for foam separator — rendered via JS below body load
+    </script>
+  </div>
+  <div id="foam-sep" style="display:flex;justify-content:center;align-items:center;gap:0;z-index:10;position:relative;margin:4px 0 28px;flex-wrap:wrap;padding:0 20px;"></div>
+
+  <!-- ABOUT -->
+  <section id="about" style="padding: 16px 0 48px;">
+    <div class="about-wrap">
+      <div class="about-grid">
+        <div class="about-text">
+          <span class="section-label">✦ Our Story</span>
+          <h2 class="section-title">Revolutionizing<br>Cleanliness</h2>
+          <p>In October 2023, founder <strong style="color:#1a7f64;">Ishmael Keogatile</strong> laid the cornerstone of El Paso Cleaning Solutions — driven to break barriers that confined innovative services to affluent areas.</p>
+          <p style="margin-top:12px;">Born from 3 years of grassroots success as <strong style="color:#3b9dd4;">Ishy's Car Wash & Sneaker Laundry</strong>, we now bring unmatched quality and convenience to every doorstep in Rustenburg and beyond.</p>
+          <p style="margin-top:12px;">Our mission: deliver exceptional & holistic cleaning — blending fixed & mobile solutions to create safer, vibrant environments for individuals, households & businesses alike.</p>
+          <div class="fact-pills">
+            <div class="fact-pill">🌿 Eco-friendly</div>
+            <div class="fact-pill">🫧 Innovation first</div>
+            <div class="fact-pill">🏘️ Community impact</div>
+            <div class="fact-pill">📱 Mobile solutions</div>
           </div>
         </div>
-        <div class="relative flex justify-center">
-          <div class="w-64 h-64 rounded-full bg-gradient-to-tr from-sky-100/60 to-emerald-100/60 backdrop-blur-sm flex items-center justify-center shadow-2xl border-4 border-white/40">
-            <span class="text-8xl drop-shadow-md">🧽✨</span>
+        <div class="about-visual">
+          <div class="bubble-ring glass" style="border-radius:50%;">
+            <div class="core" style="font-size:3.5rem;animation:none;display:flex;align-items:center;justify-content:center;gap:4px;">🧽</div>
+            <div class="orbit-dot" style="width:36px;height:36px;--start:0deg;animation-duration:10s;font-size:1rem;display:flex;align-items:center;justify-content:center;">🫧</div>
+            <div class="orbit-dot" style="width:28px;height:28px;--start:120deg;animation-duration:10s;font-size:0.9rem;display:flex;align-items:center;justify-content:center;">💧</div>
+            <div class="orbit-dot" style="width:32px;height:32px;--start:240deg;animation-duration:10s;font-size:1rem;display:flex;align-items:center;justify-content:center;">✨</div>
           </div>
-          <div class="absolute -bottom-5 -right-5 w-20 h-20 rounded-full bg-white/30 backdrop-blur flex items-center justify-center text-3xl animate-pulse">🧼</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SERVICES SECTION (from exact company profile: Industrial, Commercial, Residential, Laundry, Denim, Car wash etc) -->
-  <section class="relative z-10 max-w-7xl mx-auto px-6 py-16">
-    <div class="text-center mb-12">
-      <h2 class="text-4xl font-bold text-gray-800 inline-block bg-white/40 backdrop-blur-sm px-8 py-2 rounded-full">Our <span class="text-emerald-600">Signature</span> Services</h2>
-      <div class="w-28 h-1 bg-gradient-to-r from-sky-400 to-emerald-400 mx-auto mt-4 rounded-full"></div>
+  <!-- IRIDESCENT STREAK SEPARATOR -->
+  <div style="position:relative;z-index:10;margin:8px 0;height:24px;overflow:hidden;">
+    <div style="position:absolute;inset:0;background:linear-gradient(90deg,transparent 0%,rgba(93,191,138,0.18) 15%,rgba(59,157,212,0.25) 30%,rgba(93,191,138,0.20) 50%,rgba(59,157,212,0.22) 70%,rgba(93,191,138,0.15) 85%,transparent 100%);animation:streakSlide 4s linear infinite;}">
     </div>
-    
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      <!-- Industrial -->
-      <div class="glass-card p-6 rounded-2xl group transition-all">
-        <div class="service-icon text-5xl mb-4">🏭🧼</div>
-        <h3 class="text-2xl font-bold">Industrial Cleaning</h3>
-        <p class="text-gray-700 mt-2">Factories, warehouses, hospitals, power plants, tank cleaning & mold remediation. Heavy-duty expertise.</p>
+  </div>
+  <style>
+    @keyframes streakSlide {
+      0%   { transform: translateX(-60px); }
+      100% { transform: translateX(60px); }
+    }
+  </style>
+
+  <!-- SERVICES -->
+  <section id="services" style="padding:32px 0 16px;">
+    <div class="services-wrap">
+      <div style="text-align:center;margin-bottom:8px;">
+        <span class="section-label">✦ What We Do</span>
+        <h2 class="section-title" style="margin-top:6px;">Our <span style="background:linear-gradient(90deg,#1a7f64,#3b9dd4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Signature</span> Services</h2>
+        <p style="color:#5a7a68;font-size:0.9rem;margin-top:8px;max-width:460px;margin-inline:auto;">Every service is carried out with precision, care, and a touch of the bubbly magic that defines Elpaso.</p>
       </div>
-      <!-- Commercial -->
-      <div class="glass-card p-6 rounded-2xl group">
-        <div class="service-icon text-5xl mb-4">🏨✨</div>
-        <h3 class="text-2xl font-bold">Commercial Cleaning</h3>
-        <p class="text-gray-700">Office buildings, hotels, schools, entertainment centres — deep disinfection, pressure washing, exhaust systems.</p>
-      </div>
-      <!-- Residential -->
-      <div class="glass-card p-6 rounded-2xl group">
-        <div class="service-icon text-5xl mb-4">🏡🧹</div>
-        <h3 class="text-2xl font-bold">Residential Cleaning</h3>
-        <p class="text-gray-700">Deep cleaning carpets, bathrooms, high ceilings, spring cleaning & disinfecting households to safety standards.</p>
-      </div>
-      <!-- Laundry & Dry Cleaning -->
-      <div class="glass-card p-6 rounded-2xl group">
-        <div class="service-icon text-5xl mb-4">🧺✨</div>
-        <h3 class="text-2xl font-bold">Laundry & Dry Cleaning</h3>
-        <p class="text-gray-700">Private laundry, duvets, pillows, rugs, curtains — professional care for delicate fabrics & upholstery cleaning.</p>
-      </div>
-      <!-- Denim & Footwear Care -->
-      <div class="glass-card p-6 rounded-2xl group">
-        <div class="service-icon text-5xl mb-4">👟🎨</div>
-        <h3 class="text-2xl font-bold">Denim & Footwear</h3>
-        <p class="text-gray-700">Jean waxing, denim jacket customization, sneaker laundry & shoe customization + maintenance products.</p>
-      </div>
-      <!-- Car Wash -->
-      <div class="glass-card p-6 rounded-2xl group">
-        <div class="service-icon text-5xl mb-4">🚗💧</div>
-        <h3 class="text-2xl font-bold">Premium Car Wash</h3>
-        <p class="text-gray-700">Soaping, polishing, waxing, tire & wheel detailing – full-body shine & sanitising for your vehicle.</p>
+
+      <div class="services-grid">
+        <div class="service-card glass">
+          <div class="service-icon-wrap">🏭</div>
+          <h3>Industrial Cleaning</h3>
+          <p>Factories, warehouses, hospitals, power plants, tank cleaning & mold remediation. Heavy-duty expertise for the toughest environments.</p>
+        </div>
+        <div class="service-card glass">
+          <div class="service-icon-wrap">🏨</div>
+          <h3>Commercial Cleaning</h3>
+          <p>Office buildings, hotels, schools, entertainment centres — deep disinfection, pressure washing & exhaust systems handled with care.</p>
+        </div>
+        <div class="service-card glass">
+          <div class="service-icon-wrap">🏡</div>
+          <h3>Residential Cleaning</h3>
+          <p>Deep cleaning carpets, bathrooms, high ceilings, spring cleaning & disinfecting households to professional safety standards.</p>
+        </div>
+        <div class="service-card glass">
+          <div class="service-icon-wrap">🧺</div>
+          <h3>Laundry & Dry Cleaning</h3>
+          <p>Private laundry, duvets, pillows, rugs, curtains — professional care for delicate fabrics & upholstery with expert finishing.</p>
+        </div>
+        <div class="service-card glass">
+          <div class="service-icon-wrap">👟</div>
+          <h3>Denim & Footwear</h3>
+          <p>Jean waxing, denim jacket customization, sneaker laundry & shoe customization plus premium maintenance products.</p>
+        </div>
+        <div class="service-card glass">
+          <div class="service-icon-wrap">🚗</div>
+          <h3>Premium Car Wash</h3>
+          <p>Soaping, polishing, waxing, tire & wheel detailing — full-body shine & sanitising for your vehicle, inside and out.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- OTHER SERVICES: Event Rentals, Landscaping, Furniture Removal, Office Supplies (exact from PDF) -->
-  <section class="relative z-10 max-w-7xl mx-auto px-6 py-8">
-    <div class="glass-card p-8 rounded-3xl bg-white/40">
-      <div class="flex flex-col md:flex-row justify-between items-start gap-6">
+  <!-- BUBBLE CHAIN SEPARATOR -->
+  <div id="bubble-chain" style="display:flex;justify-content:center;align-items:center;gap:6px;padding:28px 20px;z-index:10;position:relative;flex-wrap:wrap;"></div>
+
+  <!-- EXTRAS -->
+  <section style="padding:0 0 32px;">
+    <div class="extras-wrap">
+      <div class="extras-card glass-tinted">
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:24px;">
+          <div style="flex:1;min-width:240px;">
+            <span class="section-label">✦ Bespoke Solutions</span>
+            <h2 class="section-title" style="margin-top:6px;">Beyond Cleaning —<br><span style="color:#3b9dd4;">Holistic Care</span></h2>
+            <ul class="extras-list">
+              <li><div class="icon-pill">🪑</div><div><strong>Event Rentals</strong> — Chairs, rubbish & recycling bins for any occasion.</div></li>
+              <li><div class="icon-pill">🌿</div><div><strong>Landscaping</strong> — Tree felling, lawn cutting & garden maintenance.</div></li>
+              <li><div class="icon-pill">🚛</div><div><strong>Furniture Removal & Disposal</strong> — Hassle-free, responsible removal.</div></li>
+              <li><div class="icon-pill">📄</div><div><strong>Office & Cleaning Supplies</strong> — A4 paper, PPE, chemicals, JoJo tanks, printers, detergents & more.</div></li>
+            </ul>
+          </div>
+          <div style="flex-shrink:0;display:flex;align-items:center;justify-content:center;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle at 32% 28%,rgba(255,255,255,0.9),rgba(93,191,138,0.35));box-shadow:0 12px 32px rgba(26,127,100,0.14),inset 2px 2px 8px rgba(255,255,255,0.8);font-size:2.8rem;">🧴</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOUNDER -->
+  <section style="padding:0 0 32px;">
+    <div class="founder-wrap">
+      <div class="founder-card glass">
+        <div class="founder-avatar">👨‍💼</div>
         <div>
-          <span class="text-emerald-700 font-bold text-sm">✦ BESPOKE SOLUTIONS</span>
-          <h3 class="text-2xl font-bold mt-1">Beyond Cleaning — <span class="text-sky-700">Holistic Care</span></h3>
-          <ul class="mt-4 space-y-2 text-gray-700">
-            <li class="flex gap-2"><span>🪑</span> Event Rentals: Chairs, rubbish & recycling bins</li>
-            <li class="flex gap-2"><span>🌿</span> Landscaping: Tree felling, lawn cutting</li>
-            <li class="flex gap-2"><span>🚛</span> Furniture Removal & Disposal</li>
-            <li class="flex gap-2"><span>📄</span> Office & Cleaning Supplies: A4 paper, PPE, chemicals, JoJo tanks, printers, detergents</li>
-          </ul>
-        </div>
-        <div class="bg-white/30 rounded-full p-4 backdrop-blur-sm">
-          <span class="text-5xl">🧴📦</span>
+          <h3>Ishmael Keogatile</h3>
+          <div class="role">Visionary Founder & CEO</div>
+          <p>With a background in sales, management & telemarketing, Ishmael brings strategic thinking and community-focused leadership. From grassroots car wash to full-scale cleaning enterprise — redefining convenience and excellence for all.</p>
+          <div class="contact-pills">
+            <div class="contact-pill">📞 069 306 0334</div>
+            <div class="contact-pill">✉️ ishmaelkeogatile@gmail.com</div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- TEAM / FOUNDER section (using info from profile) -->
-  <section class="relative z-10 max-w-7xl mx-auto px-6 py-16">
-    <div class="glass-card p-6 md:p-10 rounded-3xl flex flex-col md:flex-row gap-8 items-center">
-      <div class="flex-shrink-0 bg-gradient-to-br from-emerald-100 to-sky-100 rounded-full w-32 h-32 flex items-center justify-center shadow-xl text-6xl">
-        👨‍💼
-      </div>
-      <div>
-        <h3 class="text-2xl font-bold">Meet Ishmael Keogatile</h3>
-        <p class="text-emerald-700 font-medium">Visionary Founder & CEO</p>
-        <p class="mt-3 text-gray-700">With a background in sales, management & telemarketing, Ishmael brings strategic thinking and community-focused leadership. From grassroots car wash to full-scale cleaning enterprise, he’s redefining convenience and excellence.</p>
-        <div class="mt-3 text-sm text-gray-500">📞 069 306 0334 | ✉️ ishmaelkeogatile@gmail.com</div>
-      </div>
-    </div>
-  </section>
+  <!-- ANIMATED DRIP SEPARATOR -->
+  <div style="position:relative;z-index:10;height:40px;overflow:hidden;margin:0 0 8px;">
+    <svg viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+      <g fill="rgba(93,191,138,0.22)">
+        <ellipse cx="180"  cy="8"  rx="14" ry="10"><animate attributeName="cy" values="8;14;8" dur="2.1s" repeatCount="indefinite"/></ellipse>
+        <ellipse cx="360"  cy="6"  rx="10" ry="7" ><animate attributeName="cy" values="6;13;6" dur="1.7s" repeatCount="indefinite"/></ellipse>
+        <ellipse cx="540"  cy="9"  rx="12" ry="9" ><animate attributeName="cy" values="9;16;9" dur="2.4s" repeatCount="indefinite"/></ellipse>
+        <ellipse cx="720"  cy="5"  rx="9"  ry="7" ><animate attributeName="cy" values="5;12;5" dur="1.9s" repeatCount="indefinite"/></ellipse>
+        <ellipse cx="900"  cy="8"  rx="13" ry="8" ><animate attributeName="cy" values="8;15;8" dur="2.2s" repeatCount="indefinite"/></ellipse>
+        <ellipse cx="1080" cy="6"  rx="11" ry="8" ><animate attributeName="cy" values="6;14;6" dur="2.0s" repeatCount="indefinite"/></ellipse>
+        <ellipse cx="1260" cy="7"  rx="10" ry="7" ><animate attributeName="cy" values="7;13;7" dur="1.8s" repeatCount="indefinite"/></ellipse>
+      </g>
+      <g fill="rgba(59,157,212,0.20)">
+        <ellipse cx="90"   cy="6"  rx="8"  ry="6"><animate attributeName="cy" values="6;12;6" dur="2.6s" repeatCount="indefinite"/></ellipse>
+        <ellipse cx="450"  cy="7"  rx="10" ry="7"><animate attributeName="cy" values="7;14;7" dur="2.3s" repeatCount="indefinite"/></ellipse>
+        <ellipse cx="630"  cy="5"  rx="7"  ry="5"><animate attributeName="cy" values="5;11;5" dur="1.6s" repeatCount="indefinite"/></ellipse>
+        <ellipse cx="810"  cy="8"  rx="11" ry="8"><animate attributeName="cy" values="8;16;8" dur="2.8s" repeatCount="indefinite"/></ellipse>
+        <ellipse cx="1170" cy="6"  rx="9"  ry="7"><animate attributeName="cy" values="6;13;6" dur="2.0s" repeatCount="indefinite"/></ellipse>
+        <ellipse cx="1350" cy="7"  rx="12" ry="8"><animate attributeName="cy" values="7;15;7" dur="2.5s" repeatCount="indefinite"/></ellipse>
+      </g>
+    </svg>
+  </div>
 
-  <!-- CTA + Address section: GET A QUOTE -->
-  <section class="relative z-10 max-w-6xl mx-auto px-6 py-12 mb-16">
-    <div class="glass-card p-10 rounded-[64px] text-center bg-gradient-to-r from-white/50 to-emerald-50/50">
-      <h2 class="text-3xl md:text-5xl font-bold text-gray-800">Ready for <span class="text-emerald-600">a sparkling transformation?</span></h2>
-      <div class="flex justify-center my-6 gap-3">
-        <div class="h-1 w-12 bg-sky-400 rounded-full animate-pulse"></div>
-        <div class="h-1 w-12 bg-emerald-400 rounded-full animate-pulse delay-75"></div>
-      </div>
-      <p class="text-gray-700 max-w-xl mx-auto">Let's create cleaner, safer, vibrant spaces together — from residential to industrial.</p>
-      <div class="mt-8 flex flex-wrap justify-center gap-6 text-sm md:text-base">
-        <div class="flex items-center gap-2 bg-white/60 px-5 py-2 rounded-full"><span>📍</span> 12A Goby Street, Watervaal East, Rustenburg, 0300</div>
-        <div class="flex items-center gap-2 bg-white/60 px-5 py-2 rounded-full"><span>📞</span> 069 306 0334</div>
-        <div class="flex items-center gap-2 bg-white/60 px-5 py-2 rounded-full"><span>📧</span> ishmaelkeogatile@gmail.com</div>
-      </div>
-      <div class="mt-8">
-        <a href="#" class="inline-flex items-center gap-2 bg-gradient-to-r from-sky-500 to-emerald-500 text-white px-8 py-4 rounded-full text-lg font-bold shadow-2xl hover:shadow-xl transition-all transform hover:scale-105">💬 Get a Quote &nbsp;→</a>
+  <!-- CTA -->
+  <section id="contact" style="padding:16px 0 40px;">
+    <div class="cta-wrap">
+      <div class="cta-card glass-tinted">
+        <div style="font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:#3b9dd4;font-weight:600;margin-bottom:14px;">✦ Let's Get Started</div>
+        <h2>Ready for a <span>sparkling transformation?</span></h2>
+        <p style="color:#4a6a58;font-size:0.95rem;max-width:480px;margin:14px auto 0;line-height:1.75;">Let's create cleaner, safer, vibrant spaces together — from residential to industrial. One bubble at a time.</p>
+        <div class="cta-info-pills">
+          <div class="cta-info-pill">📍 12A Goby St, Watervaal East, Rustenburg 0300</div>
+          <div class="cta-info-pill">📞 069 306 0334</div>
+          <div class="cta-info-pill">📧 ishmaelkeogatile@gmail.com</div>
+        </div>
+        <div style="margin-top:32px;">
+          <a href="mailto:ishmaelkeogatile@gmail.com" class="btn-primary" style="font-size:1rem;padding:16px 40px;">💬 Get a Quote &nbsp;→</a>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer class="relative z-10 border-t border-white/40 mt-10 py-8 text-center text-gray-600 backdrop-blur-sm">
-    <p>© 2025 Elpaso Cleaning Solutions & Services — Redefining Clean, One Bubble at a Time ✨</p>
-    <div class="flex justify-center gap-4 mt-3 text-2xl opacity-70">
-      <span>🧽</span><span>🫧</span><span>🧴</span><span>✨</span>
-    </div>
+  <footer class="glass" style="border-radius:0;">
+    <p>© 2025 Elpaso Cleaning Solutions & Services — Redefining Clean, One Bubble at a Time</p>
+    <div class="emojis">🧽 🫧 🧴 💧 ✨</div>
   </footer>
 
-  <!-- Script to generate floating interactive bubbles that "pop" on click, with animation -->
   <script>
-    const bubbleContainer = document.getElementById('bubble-container');
-    if (bubbleContainer) {
-      // switch to allow clicking bubbles (they are pointer-events auto, but container pointer-events none? we set container as relative with pointer-events none, but each bubble pointer-events auto)
-      bubbleContainer.style.pointerEvents = 'none';
-      
-      function createBubble() {
-        const bubble = document.createElement('div');
-        const size = Math.floor(Math.random() * 60) + 30; // 30px to 90px
-        const leftPos = Math.random() * 100; // vw % 
-        const animationDuration = Math.random() * 8 + 5; // seconds
-        const delay = Math.random() * 8;
-        bubble.classList.add('bubble');
-        bubble.style.width = `${size}px`;
-        bubble.style.height = `${size}px`;
-        bubble.style.left = `${leftPos}%`;
-        bubble.style.bottom = `-${size}px`;
-        bubble.style.position = 'absolute';
-        bubble.style.animation = `floatBubble ${animationDuration}s infinite alternate ease-in-out`;
-        bubble.style.animationDelay = `${delay}s`;
-        bubble.style.pointerEvents = 'auto';
-        bubble.style.cursor = 'pointer';
-        bubble.style.zIndex = 5;
-        
-        // add pop event
-        bubble.addEventListener('click', (e) => {
-          e.stopPropagation();
-          bubble.classList.add('pop-effect');
-          setTimeout(() => {
-            if (bubble.parentNode) bubble.remove();
-          }, 400);
-          // tiny sound-like visual clue: create mini ripple
-          const ripple = document.createElement('div');
-          ripple.className = 'fixed w-6 h-6 rounded-full bg-white/60 pointer-events-none animate-ping';
-          ripple.style.left = `${e.clientX}px`;
-          ripple.style.top = `${e.clientY}px`;
-          ripple.style.transform = 'translate(-50%, -50%)';
-          ripple.style.position = 'fixed';
-          ripple.style.zIndex = 999;
-          document.body.appendChild(ripple);
-          setTimeout(() => ripple.remove(), 300);
-        });
-        
-        bubbleContainer.appendChild(bubble);
-        
-        // remove after some time if it goes off top, but animation will carry it — simple cleanup after 20 sec
-        setTimeout(() => {
-          if (bubble.parentNode) bubble.remove();
-        }, 20000);
-      }
-      
-      // generate bubbles in intervals, 20 bubbles at start then continuous
-      for (let i = 0; i < 18; i++) {
-        setTimeout(() => createBubble(), i * 300);
-      }
-      setInterval(() => {
-        if (document.querySelectorAll('.bubble').length < 35) {
-          createBubble();
-        }
-      }, 1800);
-      
-      // extra hero title pop animation already applied via CSS class
+    /* ── FOAM SEPARATOR ── */
+    const foamSep = document.getElementById('foam-sep');
+    const foamSizes = [8,12,10,14,9,11,15,8,13,10,12,9,11,14,8,10,13,12,9,11,8,15,10,12,9,11,13,8,10,12];
+    const delays   = [0,.3,.6,.9,.5,.2,.8,.4,1.0,.7,.35,.65,.15,.55,.45,.25,.75,.95,.1,.85,.4,.6,.2,.9,.3,.7,.05,.5,.8,.15];
+    foamSizes.forEach((s,i) => {
+      const d = document.createElement('div');
+      d.className = 'foam-dot';
+      d.style.cssText = `width:${s}px;height:${s}px;animation-delay:${delays[i]}s;margin:0 ${Math.max(2,s/4)}px;`;
+      foamSep.appendChild(d);
+    });
+
+    /* ── BUBBLE CHAIN SEPARATOR ── */
+    const chainEl = document.getElementById('bubble-chain');
+    for(let i=0;i<28;i++){
+      const s = 10 + Math.random()*16;
+      const el = document.createElement('div');
+      el.style.cssText = `
+        width:${s}px;height:${s}px;border-radius:50%;flex-shrink:0;
+        background:radial-gradient(circle at 32% 28%, rgba(255,255,255,0.9), rgba(93,191,138,0.35));
+        box-shadow:0 3px 8px rgba(60,140,100,0.12),inset 1px 1px 4px rgba(255,255,255,0.8);
+        animation:foamPulse ${1.4+Math.random()*1.2}s ${i*0.08}s ease-in-out infinite alternate;
+        cursor:pointer;
+      `;
+      el.addEventListener('click', ()=>{
+        el.style.animation='bubblePop .3s forwards';
+        setTimeout(()=>{el.style.opacity='0';el.style.pointerEvents='none';},300);
+      });
+      chainEl.appendChild(el);
     }
 
-    // add responsive interactive second wave: bubble separator effect
-    const waveDiv = document.querySelector('.wave-separator');
-    if(waveDiv) {
-      setInterval(() => {
-        // just subtle shimmer, adds life
-        waveDiv.style.opacity = '0.7';
-        setTimeout(() => waveDiv.style.opacity = '1', 200);
-      }, 2000);
+    /* ── FLOATING BUBBLES ── */
+    const layer = document.getElementById('bubble-layer');
+    layer.style.pointerEvents = 'none';
+
+    function spawnBubble() {
+      const b = document.createElement('div');
+      b.className = 'floating-bubble';
+      const sz = 28 + Math.random()*70;
+      const x  = Math.random()*100;
+      const dur= 7 + Math.random()*9;
+      const del= Math.random()*5;
+
+      b.style.cssText = `
+        width:${sz}px;height:${sz}px;
+        left:${x}%;bottom:-${sz}px;
+        animation:riseUp ${dur}s ${del}s linear forwards;
+      `;
+      b.addEventListener('click', e => {
+        e.stopPropagation();
+        b.classList.add('popping');
+        // sparkle
+        const sp = document.createElement('div');
+        sp.className = 'sparkle';
+        sp.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;width:${sz*0.8}px;height:${sz*0.8}px;background:radial-gradient(circle,rgba(255,255,255,0.95),rgba(93,191,138,0.3));`;
+        document.body.appendChild(sp);
+        setTimeout(()=>{ sp.remove(); b.remove(); }, 400);
+      });
+      layer.appendChild(b);
+      setTimeout(()=>{ if(b.parentNode) b.remove(); }, (dur+del)*1000+500);
     }
+
+    // inject riseUp keyframes
+    const ks = document.createElement('style');
+    ks.textContent = `
+      @keyframes riseUp {
+        0%   { transform: translateY(0) translateX(0) scale(1);    opacity:0; }
+        5%   { opacity:.85; }
+        50%  { transform: translateY(-50vh) translateX(${(Math.random()>.5?1:-1)*30}px) scale(1.03); opacity:.7; }
+        95%  { opacity:.4; }
+        100% { transform: translateY(-105vh) translateX(${(Math.random()>.5?1:-1)*60}px) scale(0.9); opacity:0; }
+      }
+    `;
+    document.head.appendChild(ks);
+
+    // spawn initial batch
+    for(let i=0;i<22;i++) setTimeout(spawnBubble, i*220);
+    setInterval(()=>{ if(document.querySelectorAll('.floating-bubble').length<40) spawnBubble(); }, 1400);
   </script>
-  <!-- ensure container for bubbles visible -->
-  <style>
-    #bubble-container {
-      pointer-events: none;
-    }
-    .bubble {
-      pointer-events: auto;
-    }
-    .pop-effect {
-      animation: popOff 0.4s forwards !important;
-    }
-    @keyframes popOff {
-      0% { transform: scale(1); opacity: 0.9; }
-      100% { transform: scale(2.2); opacity: 0; visibility: hidden; }
-    }
-  </style>
 </body>
 </html>
