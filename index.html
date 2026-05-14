@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Divine Emporium Beauty | Luxury Hair & Beauty Studio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" href="assets/DEB Logo .png" type="image/x-icon">
+
+  <style>
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #e8d19a;
+      --gold-dark: #9a7a2a;
+      --ivory: #faf8f4;
+      --cream: #f2ece2;
+      --beige: #e0d3c1;
+      --warm-brown: #7a5c3e;
+      --dark-brown: #2a1e14;
+      --charcoal: #1a1714;
+      --white: #ffffff;
+      --off-white: #f9f6f1;
+      --text-dark: #1e1a17;
+      --text-mid: #5a4a38;
+      --text-light: #9a8878;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--ivory);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* ─── CUSTOM CURSOR ─────────────────────────────── */
+    .cursor-dot {
+      width: 8px; height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.1s ease;
+    }
+    .cursor-ring {
+      width: 36px; height: 36px;
+      border: 1.5px solid var(--gold);
+      border-radius: 50%;
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9998;
+      transition: transform 0.15s ease, opacity 0.2s;
+      opacity: 0.6;
+    }
+
+    /* ─── NAVBAR ────────────────────────────────────── */
+    .navbar-custom {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 1.4rem 0;
+      transition: all 0.4s ease;
+      background: transparent;
+    }
+    .navbar-custom.scrolled {
+      background: rgba(250, 248, 244, 0.97);
+      backdrop-filter: blur(20px);
+      padding: 0.9rem 0;
+      box-shadow: 0 1px 0 rgba(201,168,76,0.2);
+    }
+    .navbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--white);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .navbar-custom.scrolled .nav-logo {
+      color: var(--dark-brown);
+    }
+    .nav-logo span {
+      color: var(--gold);
+    }
+    .nav-menu {
+      display: flex;
+      gap: 2.8rem;
+      list-style: none;
+    }
+    .nav-menu a {
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.88);
+      position: relative;
+      transition: color 0.3s;
+    }
+    .navbar-custom.scrolled .nav-menu a {
+      color: var(--text-mid);
+    }
+    .nav-menu a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width 0.35s ease;
+    }
+    .nav-menu a:hover::after { width: 100%; }
+    .nav-menu a:hover { color: var(--gold); }
+    .navbar-custom.scrolled .nav-menu a:hover { color: var(--gold-dark); }
+
+    .nav-cta {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 0.6rem 1.6rem;
+      border: 1px solid rgba(201,168,76,0.8);
+      color: var(--gold-light);
+      text-decoration: none;
+      border-radius: 40px;
+      transition: all 0.3s;
+    }
+    .nav-cta:hover {
+      background: var(--gold);
+      color: var(--dark-brown);
+      border-color: var(--gold);
+    }
+    .navbar-custom.scrolled .nav-cta {
+      color: var(--gold-dark);
+      border-color: var(--gold);
+    }
+    .navbar-custom.scrolled .nav-cta:hover {
+      background: var(--gold);
+      color: var(--white);
+    }
+
+    /* mobile hamburger */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 24px;
+      height: 1.5px;
+      background: var(--white);
+      transition: all 0.3s;
+    }
+    .navbar-custom.scrolled .nav-toggle span {
+      background: var(--dark-brown);
+    }
+
+    /* ─── HERO ──────────────────────────────────────── */
+    .hero-section {
+      position: relative;
+      height: 100vh;
+      min-height: 680px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .hero-video-wrap {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-video-wrap video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    /* very light overlay — fresh and clean */
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(26,23,20,0.38) 0%,
+        rgba(26,23,20,0.22) 50%,
+        rgba(26,23,20,0.55) 100%
+      );
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 1rem;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 1.6rem;
+      opacity: 0;
+      animation: fadeSlideDown 0.9s 0.3s forwards;
+    }
+    .hero-eyebrow::before,
+    .hero-eyebrow::after {
+      content: '';
+      display: block;
+      width: 36px;
+      height: 1px;
+      background: var(--gold);
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.4rem, 8vw, 7rem);
+      font-weight: 700;
+      line-height: 1.04;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+      overflow: hidden;
+    }
+    .hero-title .line {
+      display: block;
+      opacity: 0;
+      transform: translateY(100%);
+      animation: titleReveal 1s cubic-bezier(0.22,1,0.36,1) forwards;
+    }
+    .hero-title .line:nth-child(1) { animation-delay: 0.6s; }
+    .hero-title .line:nth-child(2) { animation-delay: 0.82s; color: var(--gold-light); font-style: italic; }
+    .hero-title .line:nth-child(3) { animation-delay: 1.04s; }
+
+    .hero-sub {
+      font-size: 0.88rem;
+      font-weight: 300;
+      letter-spacing: 1.5px;
+      color: rgba(255,255,255,0.78);
+      max-width: 460px;
+      margin: 1.8rem auto 2.6rem;
+      opacity: 0;
+      animation: fadeSlideUp 0.9s 1.4s forwards;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 1.2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeSlideUp 0.9s 1.65s forwards;
+    }
+
+    @keyframes titleReveal {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeSlideDown {
+      to { opacity: 1; }
+    }
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 2.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(255,255,255,0.55);
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeSlideUp 1s 2.2s forwards;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.15); }
+    }
+
+    /* ─── BUTTONS ───────────────────────────────────── */
+    .btn-gold {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.85rem 2rem;
+      background: linear-gradient(115deg, var(--gold-light), var(--gold));
+      color: var(--dark-brown);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 40px;
+      border: none;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.35s;
+      box-shadow: 0 6px 24px rgba(201,168,76,0.3);
+    }
+    .btn-gold::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(115deg, var(--gold), var(--gold-dark));
+      opacity: 0;
+      transition: opacity 0.35s;
+    }
+    .btn-gold:hover::before { opacity: 1; }
+    .btn-gold:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(201,168,76,0.4); color: var(--white); }
+    .btn-gold span { position: relative; z-index: 1; }
+    .btn-gold i { position: relative; z-index: 1; }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.85rem 2rem;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.5);
+      color: rgba(255,255,255,0.88);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: all 0.35s;
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: var(--gold-light);
+      color: var(--gold-light);
+      transform: translateY(-3px);
+    }
+
+    /* ─── SECTION SHARED ────────────────────────────── */
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      margin-bottom: 1rem;
+    }
+    .section-label::before {
+      content: '';
+      width: 28px;
+      height: 1px;
+      background: var(--gold);
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 600;
+      line-height: 1.15;
+      color: var(--dark-brown);
+    }
+    .section-title em { font-style: italic; color: var(--warm-brown); }
+
+    /* ─── ABOUT STRIP ───────────────────────────────── */
+    .about-strip {
+      background: linear-gradient(135deg, var(--dark-brown) 0%, #3a2a1c 50%, #1a1410 100%);
+      padding: 5rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-strip::before {
+      content: 'DE';
+      position: absolute;
+      right: -2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Playfair Display', serif;
+      font-size: 18rem;
+      font-weight: 700;
+      color: rgba(201,168,76,0.04);
+      line-height: 1;
+      pointer-events: none;
+    }
+    .about-strip .section-label { color: var(--gold-light); }
+    .about-strip .section-label::before { background: var(--gold-light); }
+    .about-strip .section-title { color: var(--ivory); }
+    .about-strip .section-title em { color: var(--gold-light); }
+    .about-text {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.85;
+      color: rgba(240,230,215,0.78);
+      max-width: 520px;
+    }
+    .about-stat {
+      text-align: center;
+      padding: 1.8rem 1rem;
+      border-left: 1px solid rgba(201,168,76,0.2);
+    }
+    .about-stat:first-child { border-left: none; }
+    .about-stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      line-height: 1;
+    }
+    .about-stat-label {
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(240,230,215,0.5);
+      margin-top: 0.4rem;
+    }
+
+    /* ─── SERVICES ──────────────────────────────────── */
+    .services-section {
+      padding: 6rem 0;
+      background: var(--ivory);
+    }
+    .service-card {
+      position: relative;
+      background: var(--white);
+      border-radius: 20px;
+      padding: 2.8rem 2rem;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s;
+      border: 1px solid rgba(201,168,76,0.12);
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    .service-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(201,168,76,0.05), transparent);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .service-card:hover { transform: translateY(-10px); box-shadow: 0 24px 48px rgba(42,30,20,0.12); }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-card:hover::after { opacity: 1; }
+    .service-icon-wrap {
+      width: 60px; height: 60px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--cream), var(--beige));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.6rem;
+      transition: all 0.4s;
+    }
+    .service-card:hover .service-icon-wrap {
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    }
+    .service-icon-wrap i {
+      font-size: 1.4rem;
+      color: var(--warm-brown);
+      transition: color 0.4s;
+    }
+    .service-card:hover .service-icon-wrap i { color: var(--white); }
+    .service-num {
+      position: absolute;
+      top: 1.5rem; right: 2rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      font-weight: 700;
+      color: rgba(201,168,76,0.06);
+      line-height: 1;
+      transition: color 0.4s;
+    }
+    .service-card:hover .service-num { color: rgba(201,168,76,0.12); }
+    .service-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.45rem;
+      font-weight: 600;
+      color: var(--dark-brown);
+      margin-bottom: 0.7rem;
+    }
+    .service-desc {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--text-mid);
+    }
+    .service-arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      margin-top: 1.4rem;
+      opacity: 0;
+      transform: translateX(-8px);
+      transition: all 0.35s;
+    }
+    .service-card:hover .service-arrow { opacity: 1; transform: translateX(0); }
+
+    /* ─── VISION / MISSION ──────────────────────────── */
+    .pillars-section {
+      padding: 6rem 0;
+      background: linear-gradient(160deg, var(--cream) 0%, var(--beige) 100%);
+    }
+    .pillar-card {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 3rem 2.5rem;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.22,1,0.36,1);
+      border: 1px solid rgba(201,168,76,0.1);
+    }
+    .pillar-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold-dark));
+    }
+    .pillar-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 28px 56px rgba(42,30,20,0.1);
+    }
+    .pillar-icon {
+      font-size: 2rem;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+    .pillar-label {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 0.6rem;
+    }
+    .pillar-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--dark-brown);
+      margin-bottom: 1rem;
+    }
+    .pillar-text {
+      font-size: 0.9rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--text-mid);
+    }
+
+    /* ─── WHY CHOOSE US ─────────────────────────────── */
+    .why-section {
+      padding: 6rem 0;
+      background: var(--white);
+    }
+    .why-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.4rem;
+      padding: 2rem;
+      border-radius: 18px;
+      transition: all 0.35s;
+      border: 1px solid transparent;
+    }
+    .why-feature:hover {
+      background: var(--ivory);
+      border-color: rgba(201,168,76,0.2);
+      transform: translateX(6px);
+    }
+    .why-icon-box {
+      flex-shrink: 0;
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--cream), var(--beige));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.35s;
+    }
+    .why-feature:hover .why-icon-box {
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    }
+    .why-icon-box i {
+      font-size: 1.2rem;
+      color: var(--warm-brown);
+      transition: color 0.35s;
+    }
+    .why-feature:hover .why-icon-box i { color: var(--white); }
+    .why-feature-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--dark-brown);
+      margin-bottom: 0.35rem;
+    }
+    .why-feature-text {
+      font-size: 0.87rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--text-mid);
+    }
+    /* large decorative image side */
+    .why-image-side {
+      position: relative;
+      height: 100%;
+    }
+    .why-img-frame {
+      position: relative;
+      border-radius: 28px;
+      overflow: hidden;
+      height: 520px;
+      background: linear-gradient(145deg, var(--dark-brown) 0%, #5a3e28 50%, var(--warm-brown) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .why-img-frame::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(26,23,20,0.6), transparent 50%);
+    }
+    .why-badge {
+      position: absolute;
+      bottom: 2rem;
+      left: 2rem;
+      z-index: 2;
+      background: rgba(250,248,244,0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 1.2rem 1.6rem;
+      border: 1px solid rgba(201,168,76,0.3);
+    }
+    .why-badge-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--gold-dark);
+      line-height: 1;
+    }
+    .why-badge-text {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      margin-top: 0.3rem;
+    }
+    .why-accent {
+      position: absolute;
+      top: -16px; right: -16px;
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      opacity: 0.15;
+    }
+    .why-center-icon {
+      font-size: 7rem;
+      color: rgba(201,168,76,0.25);
+    }
+
+    /* ─── CONTACT ───────────────────────────────────── */
+    .contact-section {
+      padding: 6rem 0;
+      background: linear-gradient(145deg, var(--dark-brown) 0%, #2e2015 60%, var(--charcoal) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-section::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,0.08), transparent 70%);
+      pointer-events: none;
+    }
+    .contact-section .section-label { color: var(--gold-light); }
+    .contact-section .section-label::before { background: var(--gold-light); }
+    .contact-section .section-title { color: var(--ivory); }
+    .contact-section .section-title em { color: var(--gold-light); }
+
+    .contact-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 20px;
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      transition: all 0.35s;
+      text-decoration: none;
+    }
+    .contact-card:hover {
+      background: rgba(201,168,76,0.08);
+      border-color: rgba(201,168,76,0.4);
+      transform: translateY(-4px);
+    }
+    .contact-card-icon {
+      width: 50px; height: 50px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(201,168,76,0.2), rgba(201,168,76,0.08));
+      border: 1px solid rgba(201,168,76,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.35s;
+    }
+    .contact-card:hover .contact-card-icon {
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    }
+    .contact-card-icon i {
+      font-size: 1.1rem;
+      color: var(--gold);
+      transition: color 0.35s;
+    }
+    .contact-card:hover .contact-card-icon i { color: var(--white); }
+    .contact-card-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 0.3rem;
+    }
+    .contact-card-value {
+      font-size: 0.92rem;
+      font-weight: 400;
+      color: rgba(240,230,215,0.88);
+    }
+
+    .social-row {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .social-btn {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.25);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(240,230,215,0.6);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: all 0.3s;
+    }
+    .social-btn:hover {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--dark-brown);
+      transform: translateY(-4px) scale(1.08);
+    }
+
+    .map-card {
+      border-radius: 24px;
+      overflow: hidden;
+      height: 300px;
+      background: linear-gradient(145deg, #3a2a1c, #5a3e28);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.8rem;
+      border: 1px solid rgba(201,168,76,0.15);
+      position: relative;
+    }
+    .map-card i {
+      font-size: 2.5rem;
+      color: var(--gold);
+    }
+    .map-card-label {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: rgba(240,230,215,0.6);
+      letter-spacing: 1px;
+      text-align: center;
+      padding: 0 1rem;
+    }
+    .map-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--ivory);
+    }
+
+    /* ─── FOOTER ────────────────────────────────────── */
+    footer {
+      background: var(--charcoal);
+      padding: 2rem 0;
+      text-align: center;
+      border-top: 1px solid rgba(201,168,76,0.12);
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+    }
+    .footer-text {
+      font-size: 0.72rem;
+      font-weight: 300;
+      letter-spacing: 1.5px;
+      color: rgba(200,185,165,0.45);
+      text-transform: uppercase;
+    }
+    .footer-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      margin: 0.8rem auto;
+      opacity: 0.4;
+    }
+
+    /* ─── GOLD SEPARATOR ────────────────────────────── */
+    .gold-separator {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .gold-separator::before,
+    .gold-separator::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .gold-separator i {
+      color: var(--gold);
+      font-size: 0.8rem;
+    }
+
+    /* ─── SCROLL REVEAL ─────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── MOBILE NAV DRAWER ─────────────────────────── */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(26,23,20,0.97);
+      z-index: 999;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: var(--ivory);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .mobile-nav a:hover { color: var(--gold); }
+    .mobile-nav-close {
+      position: absolute;
+      top: 1.5rem; right: 1.5rem;
+      background: none;
+      border: none;
+      color: var(--gold);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 991px) {
+      .nav-menu, .nav-cta { display: none; }
+      .nav-toggle { display: flex; }
+    }
+    @media (max-width: 767px) {
+      .hero-title { font-size: clamp(2.8rem, 10vw, 4.5rem); }
+      .about-stat { border-left: none; border-top: 1px solid rgba(201,168,76,0.2); padding-top: 1.5rem; }
+      .about-stat:first-child { border-top: none; }
+      .why-img-frame { height: 320px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- CURSOR -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" id="mobileNavClose"><i class="fas fa-times"></i></button>
+  <a href="#home" class="mobile-link">Home</a>
+  <a href="about.html" class="mobile-link">Our Story</a>
+  <a href="services.html" class="mobile-link">Services</a>
+  <a href="contact.html" class="mobile-link">Contact</a>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar-custom" id="navbar">
+  <div class="container">
+    <div class="navbar-inner">
+  <a href="index.html" class="nav-logo"><img src="assets/DEB Logo .png" style="height:80px; width:80px" alt="Divine Emporium Logo"></a>
+      <ul class="nav-menu">
+        <li><a href="#home">Home</a></li>
+        <li><a href="about.html">Our Story</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <a href="contact.html" class="nav-cta d-none d-lg-inline-flex">Book Now</a>
+      <div class="nav-toggle" id="navToggle">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home" class="hero-section">
+  <div class="hero-video-wrap">
+    <!-- Fallback gradient background if video doesn't load -->
+    <video autoplay muted loop playsinline poster=""
+      style="display:block;"
+      onerror="this.style.display='none'">
+      <source src="assets/vid01.mp4" type="video/mp4">
+    </video>
+    <!-- Canvas fallback for elegant animated background -->
+    <canvas id="heroCanvas" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <!--<div class="hero-eyebrow">
+      <i class="fas fa-gem" style="font-size:0.7rem;"></i>
+      Luxury Beauty Atelier · Steelpoort
+    </div>-->
+    <h1 class="hero-title">
+      <span class="line">Enhance your</span>
+      <span class="line">Natural Radiance</span>
+      <span class="line">With Elegance</span>
+    </h1>
+    <p class="hero-sub">Expert hair braiding, lash extensions, brow tinting & professional makeup artistry — crafted for the discerning individual.</p>
+    <div class="hero-buttons">
+      <a href="contact.html" class="btn-gold">
+        <span>Book Appointment</span>
+        <i class="fas fa-arrow-right" style="font-size:0.7rem;"></i>
+      </a>
+      <a href="services.html" class="btn-ghost">
+        <i class="fas fa-sparkles" style="font-size:0.7rem;"></i>
+        <span>Our Services</span>
+      </a>
+    </div>
+  </div>
+  <div class="hero-scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ABOUT STRIP -->
+<section class="about-strip" id="about">
+  <div class="container">
+    <div class="row align-items-center gy-5">
+      <div class="col-lg-7 reveal">
+        <div class="section-label">About Us</div>
+        <h2 class="section-title mb-4">A Premier <em>Beauty Destination</em><br>Dedicated to You</h2>
+        <p class="about-text">Divine Emporium Beauty is committed to enhancing natural beauty through expert craftsmanship and premium care. Our salon provides top-tier beauty solutions tailored to each client's unique style and preferences — where every visit is an indulgence.</p>
+        <div class="gold-separator" style="margin-top:2rem; max-width:260px;">
+          <i class="fas fa-diamond" style="font-size:0.6rem;"></i>
+        </div>
+      </div>
+      <div class="col-lg-5 reveal">
+        <div class="row g-0">
+          <div class="col-4">
+            <div class="about-stat">
+              <div class="about-stat-num">4+</div>
+              <div class="about-stat-label">Services</div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="about-stat">
+              <div class="about-stat-num">100%</div>
+              <div class="about-stat-label">Premium</div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="about-stat">
+              <div class="about-stat-num">∞</div>
+              <div class="about-stat-label">Elegance</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="services-section">
+  <div class="container">
+    <div class="text-center reveal mb-5">
+      <div class="section-label" style="justify-content:center;">Artistry Meets Precision</div>
+      <h2 class="section-title">Signature <em>Services</em></h2>
+    </div>
+    <div class="row g-4">
+      <div class="col-sm-6 col-lg-3 reveal">
+        <div class="service-card h-100">
+          <div class="service-num">01</div>
+          <div class="service-icon-wrap">
+            <i class="fas fa-scissors"></i>
+          </div>
+          <h3 class="service-title">Hair Braiding</h3>
+          <p class="service-desc">Box braids, knotless braids, distressed locs, cornrows, twists and more — protective and stylish hairstyles crafted to perfection.</p>
+          <div class="service-arrow">
+            Explore <i class="fas fa-arrow-right" style="font-size:0.65rem;"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3 reveal">
+        <div class="service-card h-100">
+          <div class="service-num">02</div>
+          <div class="service-icon-wrap">
+            <i class="fas fa-eye"></i>
+          </div>
+          <h3 class="service-title">Lash Extensions</h3>
+          <p class="service-desc">Classic, hybrid, and volume sets. Customised length, curl, and density — achieving the perfect lash look tailored to you.</p>
+          <div class="service-arrow">
+            Explore <i class="fas fa-arrow-right" style="font-size:0.65rem;"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3 reveal">
+        <div class="service-card h-100">
+          <div class="service-num">03</div>
+          <div class="service-icon-wrap">
+            <i class="fas fa-paint-brush"></i>
+          </div>
+          <h3 class="service-title">Brow Tinting</h3>
+          <p class="service-desc">Define and enhance your natural arches with our professional tinting service — polished, precise, and long-lasting results.</p>
+          <div class="service-arrow">
+            Explore <i class="fas fa-arrow-right" style="font-size:0.65rem;"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3 reveal">
+        <div class="service-card h-100">
+          <div class="service-num">04</div>
+          <div class="service-icon-wrap">
+            <i class="fas fa-star"></i>
+          </div>
+          <h3 class="service-title">Makeup Artistry</h3>
+          <p class="service-desc">Editorial, bridal, or everyday glam — our artists create flawless looks tailored to your features for every occasion.</p>
+          <div class="service-arrow">
+            Explore <i class="fas fa-arrow-right" style="font-size:0.65rem;"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISION & MISSION -->
+<section id="vision" class="pillars-section">
+  <div class="container">
+    <div class="text-center reveal mb-5">
+      <div class="section-label" style="justify-content:center;">Our Foundation</div>
+      <h2 class="section-title">Vision & <em>Mission</em></h2>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 reveal">
+        <div class="pillar-card">
+          <div class="pillar-icon"><i class="fas fa-eye"></i></div>
+          <div class="pillar-label">Our Vision</div>
+          <h3 class="pillar-title">Leading with Innovation</h3>
+          <p class="pillar-text">To be a leading beauty salon recognised for innovation, excellence, and exceptional customer service — empowering individuals to embrace and enhance their natural beauty with confidence.</p>
+        </div>
+      </div>
+      <div class="col-md-6 reveal">
+        <div class="pillar-card">
+          <div class="pillar-icon"><i class="fas fa-heart"></i></div>
+          <div class="pillar-label">Our Mission</div>
+          <h3 class="pillar-title">Inspiring Confidence Daily</h3>
+          <p class="pillar-text">To provide high-quality beauty services that inspire confidence and self-expression — using premium products, skilled professionals, and a welcoming atmosphere that ensures an unparalleled experience for every client.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section id="why" class="why-section">
+  <div class="container">
+    <div class="row align-items-center gy-5">
+      <div class="col-lg-6 reveal">
+        <div class="section-label">The Divine Difference</div>
+        <h2 class="section-title mb-5">Why Choose <em>Us?</em></h2>
+        <div class="d-flex flex-column gap-2">
+          <div class="why-feature">
+            <div class="why-icon-box">
+              <i class="fas fa-user-tie"></i>
+            </div>
+            <div>
+              <div class="why-feature-title">Experienced Professionals</div>
+              <p class="why-feature-text">Our team is highly trained and committed to delivering exceptional beauty services with skill and precision.</p>
+            </div>
+          </div>
+          <div class="why-feature">
+            <div class="why-icon-box">
+              <i class="fas fa-leaf"></i>
+            </div>
+            <div>
+              <div class="why-feature-title">Premium Products</div>
+              <p class="why-feature-text">We use high-quality, safe, and long-lasting beauty products to ensure the very best results every time.</p>
+            </div>
+          </div>
+          <div class="why-feature">
+            <div class="why-icon-box">
+              <i class="fas fa-couch"></i>
+            </div>
+            <div>
+              <div class="why-feature-title">Relaxing Atmosphere</div>
+              <p class="why-feature-text">A welcoming and luxurious space allowing clients to unwind and fully enjoy being pampered in comfort.</p>
+            </div>
+          </div>
+          <div class="why-feature">
+            <div class="why-icon-box">
+              <i class="fas fa-medal"></i>
+            </div>
+            <div>
+              <div class="why-feature-title">Client Satisfaction</div>
+              <p class="why-feature-text">We prioritise our clients and strive to exceed expectations with every service — your satisfaction is our measure.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 reveal">
+        <div class="why-image-side">
+          <div class="why-accent"></div>
+          <div class="why-img-frame">
+            <img src="assets/devine1.png" alt="Why Choose Us" class="img-fluid">
+          </div>
+          <div class="why-badge">
+            <div class="why-badge-num">DE</div>
+            <div class="why-badge-text">Beauty · Excellence · Elegance</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="container">
+    <div class="text-center reveal mb-5">
+      <div class="section-label" style="justify-content:center;">Get In Touch</div>
+      <h2 class="section-title">Indulge in <em>Divine Beauty</em></h2>
+    </div>
+    <div class="row gy-4">
+      <div class="col-md-6 col-lg-3 reveal">
+        <a href="https://maps.google.com/?q=10225+Dipolateng+Section+Ga-Mampuru+Steelpoort" target="_blank" class="contact-card h-100 d-flex">
+          <div class="contact-card-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div>
+            <div class="contact-card-label">Location</div>
+            <div class="contact-card-value">10225 Dipolateng Section, Ga-Mampuru, Steelpoort 1133</div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6 col-lg-3 reveal">
+        <a href="tel:0715240594" class="contact-card h-100 d-flex">
+          <div class="contact-card-icon"><i class="fas fa-phone-alt"></i></div>
+          <div>
+            <div class="contact-card-label">Call Us</div>
+            <div class="contact-card-value">071 524 0594<br>082 705 3377</div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6 col-lg-3 reveal">
+        <a href="mailto:divineemporium94@gmail.com" class="contact-card h-100 d-flex">
+          <div class="contact-card-icon"><i class="fas fa-envelope"></i></div>
+          <div>
+            <div class="contact-card-label">Email</div>
+            <div class="contact-card-value">divineemporium94@gmail.com</div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6 col-lg-3 reveal">
+        <a href="https://divineemporium.com" target="_blank" class="contact-card h-100 d-flex">
+          <div class="contact-card-icon"><i class="fas fa-globe"></i></div>
+          <div>
+            <div class="contact-card-label">Website</div>
+            <div class="contact-card-value">divineemporium.com</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="row align-items-center mt-5 gy-4">
+      <div class="col-lg-6 reveal">
+        <p style="font-size:0.85rem;color:rgba(240,230,215,0.55);letter-spacing:1px;text-transform:uppercase;margin-bottom:0.8rem;">Follow Us</p>
+        <div class="social-row">
+          <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-6 reveal">
+        <div class="map-card">
+          <i class="fas fa-location-dot"></i>
+          <div class="map-card-title">Divine Emporium Beauty</div>
+          <div class="map-card-label">Ga-Mampuru, Steelpoort 1133<br>Limpopo, South Africa</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-logo">✦ Divine Emporium Beauty</div>
+    <div class="footer-divider"></div>
+    <div class="footer-text">© 2025 Divine Emporium Beauty · Steelpoort · Where Elegance Meets Expression</div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  /* ── CURSOR ───────────────────────── */
+  const dot  = document.getElementById('cursorDot');
+  const ring = document.getElementById('cursorRing');
+  let mx=0, my=0, rx=0, ry=0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animCursor() {
+    rx += (mx - rx) * 0.15;
+    ry += (my - ry) * 0.15;
+    dot.style.transform  = `translate(${mx - 4}px, ${my - 4}px)`;
+    ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
+    requestAnimationFrame(animCursor);
+  }
+  animCursor();
+
+  /* ── NAVBAR SCROLL ────────────────── */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  /* ── MOBILE NAV ───────────────────── */
+  const mobileNav   = document.getElementById('mobileNav');
+  const navToggle   = document.getElementById('navToggle');
+  const mobileClose = document.getElementById('mobileNavClose');
+  navToggle.addEventListener('click',   () => mobileNav.classList.add('open'));
+  mobileClose.addEventListener('click', () => mobileNav.classList.remove('open'));
+  document.querySelectorAll('.mobile-link').forEach(a => {
+    a.addEventListener('click', () => mobileNav.classList.remove('open'));
+  });
+
+  /* ── SCROLL REVEAL ────────────────── */
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        const siblings = [...entry.target.parentElement.querySelectorAll('.reveal')];
+        const idx = siblings.indexOf(entry.target);
+        entry.target.style.transitionDelay = (idx * 0.08) + 's';
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => io.observe(el));
+
+  /* ── HERO CANVAS FALLBACK ─────────── */
+  /* animated gradient + particles so hero always looks great */
+  const canvas = document.getElementById('heroCanvas');
+  const ctx    = canvas.getContext('2d');
+  let   W, H, particles = [];
+
+  function resize() {
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  class Particle {
+    constructor() { this.reset(); }
+    reset() {
+      this.x   = Math.random() * W;
+      this.y   = Math.random() * H;
+      this.r   = Math.random() * 1.2 + 0.3;
+      this.vx  = (Math.random() - 0.5) * 0.25;
+      this.vy  = (Math.random() - 0.5) * 0.25;
+      this.a   = Math.random() * 0.5 + 0.1;
+    }
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset();
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(201,168,76,${this.a})`;
+      ctx.fill();
+    }
+  }
+
+  for (let i = 0; i < 80; i++) particles.push(new Particle());
+
+  let t = 0;
+  function draw() {
+    t += 0.004;
+    ctx.clearRect(0, 0, W, H);
+
+    /* animated background gradient */
+    const grd = ctx.createLinearGradient(0, 0, W, H);
+    const hue1 = 26 + Math.sin(t) * 4;
+    grd.addColorStop(0, `hsl(${hue1},40%,8%)`);
+    grd.addColorStop(0.5, `hsl(30,30%,12%)`);
+    grd.addColorStop(1, `hsl(20,35%,6%)`);
+    ctx.fillStyle = grd;
+    ctx.fillRect(0, 0, W, H);
+
+    /* radial glow */
+    const rg = ctx.createRadialGradient(W*0.72, H*0.3, 0, W*0.72, H*0.3, W*0.45);
+    rg.addColorStop(0, `rgba(201,168,76,0.08)`);
+    rg.addColorStop(1, 'transparent');
+    ctx.fillStyle = rg;
+    ctx.fillRect(0, 0, W, H);
+
+    const rg2 = ctx.createRadialGradient(W*0.2, H*0.7, 0, W*0.2, H*0.7, W*0.3);
+    rg2.addColorStop(0, `rgba(160,100,60,0.06)`);
+    rg2.addColorStop(1, 'transparent');
+    ctx.fillStyle = rg2;
+    ctx.fillRect(0, 0, W, H);
+
+    /* particles */
+    particles.forEach(p => { p.update(); p.draw(); });
+
+    /* floating lines */
+    ctx.strokeStyle = 'rgba(201,168,76,0.04)';
+    ctx.lineWidth = 0.5;
+    for (let i = 0; i < 6; i++) {
+      const y = (H / 6) * i + Math.sin(t + i) * 15;
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.bezierCurveTo(W/3, y + 30, W*2/3, y - 30, W, y);
+      ctx.stroke();
+    }
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+
+  /* ── CHECK IF VIDEO LOADED ────────── */
+  const vid = document.querySelector('.hero-video-wrap video');
+  if (vid) {
+    vid.addEventListener('canplay', () => {
+      canvas.style.display = 'none';
+    });
+    vid.addEventListener('error', () => {
+      vid.style.display = 'none';
+    });
+  }
+</script>
+
+</body>
+</html>
